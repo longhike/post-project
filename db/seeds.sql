@@ -1,1 +1,1 @@
-INSERT INTO "Posts" (username, user_post, createdAt, updatedAt) VALUES ("testuser1", "THIS IS A FUCKIN' TEST POST!!!!", Date, Date)
+INSERT INTO Posts (username, song_title, song_artist, user_inst, user_post, createdAt, updatedAt) VALUES ("sampost", "Juicy Fruit", "Mtume", "Bass", "what a great song", current_timestamp(), current_timestamp());

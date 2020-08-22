@@ -21,6 +21,9 @@ router.post('/api/posts', (req, res) => {
     db.Posts.create(
         {
             username: req.body.username,
+            song_title: req.body.song_title,
+            song_artist: req.body.song_artist,
+            user_inst: req.body.user_inst,
             user_post: req.body.user_post
         }
     )
