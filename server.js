@@ -9,27 +9,23 @@ const app = express()
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
-;
+
 
 
 const exphbs = require("express-handlebars")
+const _handlebars = require('handlebars')
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+
+app.engine("handlebars", exphbs({ 
+    defaultLayout: "main",
+    handlebars: allowInsecurePrototypeAccess(_handlebars)
+}));
 app.set("view engine", "handlebars");
 
 const routes = require('./controllers/posts_controller');
 
 app.use(routes)
-
-// require("./routes/html-routes")(app)
-
-
-// app.listen(PORT, () => {
-//     console.log("Listening on port " + PORT);
-// })
-
-
-
 
 db.sequelize.sync().then(() => {
     app.listen(PORT, () => {
