@@ -1,39 +1,51 @@
 const express = require("express")
 const router = express.Router()
 
-const db = require ('../models')
+const db = require('../models')
+const passport = require("../config/passport");
+const isAuth = require('../config/middleware/isAuthenticated')
 
-router.get('/', (req, res) => { 
-        console.log(db.Posts);
-    db.Posts.findAll({})
-    .then((data) => {
-            console.log(data + " just inside the .then of router.get");
-        let hbsObject = {
-            posts: data
-        }
-            console.log(hbsObject.posts + " inside posts_controller");
-        res.render('index', hbsObject)
-    })
- })
-
-
-router.post('/api/posts', (req, res) => {
-    db.Posts.create(
-        {
-            username: req.body.username,
-            song_title: req.body.song_title,
-            song_artist: req.body.song_artist,
-            user_inst: req.body.user_inst,
-            user_post: req.body.user_post
-        }
-    )
-    .then((result) => { 
-        res.json({id: result.insertID})
-     })
+router.post("/login", passport.authenticate('local'), (req, res) => {
+    res.redirect("/")
 })
 
+router.post("/signup", async (req, res) => {
+    try {
+        await db.User.create(req.body)
+        res.redirect("/login")
+    } catch (error) {
+        res.sendStatus(500)
+    }
+})
 
+router.get('/', isAuth, (req, res) => {
+    db.Posts.findAll({ order: [['createdAt', 'DESC']] })
+        .then((data) => {
+            console.log(data + " just inside the .then of router.get");
+            let hbsObject = {
+                posts: data
+            }
+            console.log(hbsObject.posts + " inside posts_controller");
+            res.render('index', hbsObject)
+        })
+})
 
+router.get("/signup", (req, res) => {
+    res.render("signup")
+})
+
+router.get("/login", (req, res) => {
+    res.render("login")
+})
+
+router.post('/api/posts', isAuth, async (req, res) => {
+    try {
+        await db.Posts.create(req.body)
+        res.redirect("/")
+    } catch (error) {
+        res.sendStatus(500)
+    }
+})
 
 
 module.exports = router
