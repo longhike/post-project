@@ -1,5 +1,7 @@
 const express = require("express")
+const session = require("express-session")
 const bodyParser = require("body-parser")
+const passport = require("passport")
 
 const PORT = process.env.PORT || 8080
 const db = require("./models")
@@ -10,6 +12,9 @@ app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
+app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 const exphbs = require("express-handlebars")
