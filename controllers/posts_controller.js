@@ -19,7 +19,16 @@ router.post("/signup", async (req, res) => {
 })
 
 router.get('/', isAuth, (req, res) => {
-    db.Posts.findAll({ order: [['createdAt', 'DESC']] })
+
+    let userIdent = req.user.id
+    console.log(userIdent);
+
+    db.Posts.findAll({ 
+        order: [['createdAt', 'DESC']],
+        where: {
+           UserId: userIdent
+        }
+    })
     .then((data) => {
         if (data) {
         console.log(data + " just inside the .then of router.get");
@@ -39,20 +48,51 @@ router.get('/', isAuth, (req, res) => {
     
 })
 
+// post post 
+router.post('/api/posts', isAuth, (req, res) => {
+    // let paramsId = req.params.id
+    let userIdent = req.user.id
+    console.log(req.body);
+    console.log(userIdent);
+    // console.log(db);
+    console.log(db.Posts);
+
+    console.log(typeof db.Posts.song_title);
+    console.log(db.Posts.song_title);
+
+    const newPost = db.Posts.build({
+        username: req.body.username,
+        song_title: req.body.song_title,
+        song_artist: req.body.song_artist,
+        user_inst: req.body.user_inst,
+        user_post: req.body.user_post,
+        UserId: userIdent
+    })
+    console.log(newPost);
+    console.log(newPost.dataValues);
+    db.Posts.create(newPost.dataValues).then(() => {
+        res.redirect('/')
+    })
+         
+ })
+
+// sign-up get
 router.get("/signup", (req, res) => {
     res.render("signup")
 })
 
+// login get
 router.get("/login", (req, res) => {
     res.render("login")
 })
 
-router.post('/api/posts', isAuth, (req, res) => {
-   db.Posts.create(req.body).then(() => {
-       res.redirect('/')
-   })
-        
+// logout get
+router.get('/logout', (req, res) => {
+    req.logout()
+    res.redirect('/')
 })
+
+
 
 
 module.exports = router
