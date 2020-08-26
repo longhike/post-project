@@ -21,6 +21,15 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
         }
     })
+    // connected this to users, not working
+    Post.associate = (models) => {
+        Post.belongsTo(models.User, {
+            foreignKey: {
+                allowNull: false
+            }
+        })
+    }
+
     return Post
 }
 
