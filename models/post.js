@@ -1,27 +1,21 @@
 module.exports = function(sequelize, DataTypes) {
     const Post = sequelize.define("Posts", {
-        username: {
+
+        // AMEND HERE
+        post_title: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        song_title: {
+        post_content: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        song_artist: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        user_inst: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        user_post: {
+        post_comment: {
             type: DataTypes.STRING,
             allowNull: false,
         }
     })
-    // connected this to users, not working
+    // connected this to users
     Post.associate = (models) => {
         Post.belongsTo(models.User, {
             foreignKey: {

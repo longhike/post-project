@@ -5,9 +5,22 @@ const db = require('../models')
 const passport = require("../config/passport");
 const isAuth = require('../config/middleware/isAuthenticated')
 
-router.post("/login", passport.authenticate('local'), (req, res) => {
-    res.redirect("/")
-})
+// router.post("/login", passport.authenticate('local'), (req, res) => {
+//     res.redirect("/")
+// })
+
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+      if (err) { return next(err); }
+      // Redirect if it fails
+      if (!user) { return res.redirect('/login'); }
+      req.logIn(user, (err) => {
+        if (err) { return next(err); }
+        // Redirect if it succeeds
+        return res.redirect('/');
+      });
+    })(req, res, next);
+  });
 
 router.post("/signup", async (req, res) => {
     try {
@@ -50,22 +63,19 @@ router.get('/', isAuth, (req, res) => {
 
 // post post 
 router.post('/api/posts', isAuth, (req, res) => {
-    // let paramsId = req.params.id
     let userIdent = req.user.id
     console.log(req.body);
     console.log(userIdent);
     // console.log(db);
     console.log(db.Posts);
-
-    console.log(typeof db.Posts.song_title);
-    console.log(db.Posts.song_title);
-
+    // AMEND HERE
+    console.log(typeof db.Posts.post_title);
+    console.log(db.Posts.post_title);
+    // AMEND HERE
     const newPost = db.Posts.build({
-        username: req.body.username,
-        song_title: req.body.song_title,
-        song_artist: req.body.song_artist,
-        user_inst: req.body.user_inst,
-        user_post: req.body.user_post,
+        post_title: req.body.post_title,
+        post_content: req.body.post_content,
+        post_comment: req.body.post_comment,
         UserId: userIdent
     })
     console.log(newPost);
@@ -75,6 +85,18 @@ router.post('/api/posts', isAuth, (req, res) => {
     })
          
  })
+
+
+ router.post("/api/posts/:id/delete", (req, res) => {
+    db.Posts.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(() => {
+      res.redirect("/");
+    });
+  });
 
 // sign-up get
 router.get("/signup", (req, res) => {
