@@ -50,6 +50,8 @@ npm i
 ```
 ## Usage
 To use, sign up for an account and log in!  
+
+![deployed app](https://morning-headland-82232.herokuapp.com/)
 ​
 ## Contribution
 ​
@@ -62,7 +64,6 @@ testing to be done as project moves along
 ## Contact
 For any questions and suggestions, please feel free to contact us here:
 * GitHub: longhike 
-* Email: sam.ascheim@gmail.com
 ​
 ##
 MIT License 
