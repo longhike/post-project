@@ -9,7 +9,26 @@ The application utilizes HTML, CSS, JavaScript, Node, Sequelize, Handlebars, and
 https://github.com/longhike/post-project
 ​
 ## Screenshots  
-TK
+The login page  
+![login](./images/login.png)
+
+The signup page  
+![signup](./images/signup.png)
+
+The user's input form  
+![form](./images/form.png)
+
+The user's post  
+![post](./images/post.png)
+
+Database structure  
+![db](./images/db.png)
+
+User DB (password hashed)  
+![user table](./images/user_table.png)
+
+Post DB
+![post table](./images/post_table.png)
 
 ## License
 ![GitHub](https://img.shields.io/github/license/longhike/post-project)  
