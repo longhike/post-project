@@ -51,7 +51,7 @@ npm i
 ## Usage
 To use, sign up for an account and log in!  
 
-![deployed app](https://morning-headland-82232.herokuapp.com/)
+[Deployed App](https://morning-headland-82232.herokuapp.com/)
 ​
 ## Contribution
 ​
