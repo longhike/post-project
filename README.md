@@ -27,7 +27,7 @@ Database structure
 User DB (password hashed)  
 ![user table](./images/user_table.png)
 
-Post DB
+Post DB  
 ![post table](./images/post_table.png)
 
 ## License
