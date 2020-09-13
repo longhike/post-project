@@ -4,7 +4,7 @@ const { urlencoded } = require("body-parser");
 // Creating our User model
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define("User", {
-    // The email cannot be null, and must be a proper email before creation
+    // The username cannot be null and must be unique
     username: {
       type: DataTypes.STRING,
       allowNull: false,
