@@ -5,10 +5,6 @@ const db = require('../models')
 const passport = require("../config/passport");
 const isAuth = require('../config/middleware/isAuthenticated')
 
-// router.post("/login", passport.authenticate('local'), (req, res) => {
-//     res.redirect("/")
-// })
-
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) { return next(err); }
